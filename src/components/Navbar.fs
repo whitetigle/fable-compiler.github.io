@@ -33,17 +33,18 @@ let menuItem label page currentPage =
   ] [str label]
 
 let root currentPage =
-  nav [Class "navbar"] [
-    div [Class "navbar-brand"] [
-      div [Class "navbar-item title is-4"] [str "Fable"]
-      div [Class "navbar-burger"; Data("target", Navbar.MenuId)] [
+  Navbar.navbar [] [
+    Navbar.Brand.div [] [
+      Navbar.Item.div [] [ Heading.h4 [] [str "Fable"] ]
+      Navbar.burger [ Props [ Data("target", Navbar.MenuId)] ] [
         span [] []
         span [] []
         span [] []
       ]
     ]
-    div [Id Navbar.MenuId; classList ["navbar-menu", true]] [
-      div [Class "navbar-start"] [
+    
+    Navbar.menu [ Navbar.Menu.Props [Id Navbar.MenuId] ] [
+      Navbar.Start.div [] [
         menuItem "Home" Navbar.Home currentPage
         menuItem "REPL" Navbar.Repl currentPage
         menuItem "Blog" Navbar.Blog currentPage
@@ -51,6 +52,7 @@ let root currentPage =
         menuItem "FAQ" Navbar.FAQ currentPage
         menuItem "FableConf" Navbar.FableConf currentPage
       ]
-      div [Class "navbar-end"] [navButtons]
+      Navbar.End.div [] [navButtons]
     ]
   ]
+ 

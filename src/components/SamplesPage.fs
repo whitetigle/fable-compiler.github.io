@@ -45,17 +45,18 @@ let renderSamples (samplesRepoPath: string) =
   let samples =
     Node.path.join(samplesRepoPath, "public/samples.json5")
     |> readFile |> parseJson5<JsObj<JsObj<SampleInfo>>>
-  div [Class "columns"] [
-    div [Class "column"] []
-    div [Class "column is-two-thirds"] [
+  Columns.columns [] [
+    Column.column [] []
+    Column.column [ Column.Width (Screen.All, Column.IsTwoThirds )] [
       div [Class "fable-samples"] [
-        h1 [Class "title is-2"] [str "Fun and Games"]
+        Heading.h2 [] [str "Fun and Games"]
         ul [] (samplesToList samples.["games"])
-        h1 [Class "title is-2"] [str "Productivity"]
+        Heading.h2 [] [str "Productivity"]
+        //Content.content [ CustomClass ""]
         div [Class "content fable-introduction"
              setInnerHtml (parseMarkdown productivityParagraph)] []
         ul [] (samplesToList samples.["productivity"])
-        h1 [Class "title is-2"] [str "Visualizations"]
+        Heading.h2 [] [str "Visualizations"]
         ul [] (samplesToList samples.["visual"])
       ]
     ]

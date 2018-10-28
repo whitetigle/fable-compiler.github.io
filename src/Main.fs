@@ -9,6 +9,7 @@ open WebGenerator.Components
 open WebGenerator.Literals
 open Helpers
 open Types
+open Fulma
 
 module Node = Fable.Import.Node.Exports
 module NodeGlobals = Fable.Import.Node.Globals
@@ -28,18 +29,22 @@ let renderMarkdown pageTitle navbar header subheader className targetFullPath co
       div [Class ("markdown " + className); Style [Overflow "hidden"]] [
         Header.render header subheader
         div [Style [MarginTop "1.6rem"]] [
-          div [Class "columns"] [
-            div [Class "column"] []
-            div [Class "column is-two-thirds"] [
-              div [
-                Class "content"
-                Style [Margin "5px"]
-                DangerouslySetInnerHTML { __html = parseMarkdown content }] []
+            Columns.columns [] [
+              Column.column [] []
+              Column.column [ Column.Width (Screen.All, Column.IsTwoThirds)] [
+                Content.content 
+                  [
+                    Content.Props [
+                      Style [Margin "5px"]
+                      DangerouslySetInnerHTML { __html = parseMarkdown content } 
+                    ]
+                  ] []
+              ]
+              Column.column [] []
             ]
-            div [Class "column"] []
           ]
         ]
-      ]
+
     [ "title" ==> pageTitle
       "extraCss" ==> [| "/css/highlight.css" |]
       "navbar" ==> (Navbar.root navbar |> parseReactStatic)
@@ -101,5 +106,5 @@ let renderHomePage() =
 // Run
 renderHomePage()
 renderBlog()
-renderDocs()
-renderFaq()
+//renderDocs()
+//renderFaq()
